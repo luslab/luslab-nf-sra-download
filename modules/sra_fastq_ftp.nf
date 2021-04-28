@@ -25,21 +25,21 @@ process SRA_FASTQ_FTP {
     tuple val(meta), path("*md5")     , emit: md5
 
     script:
-    def args = options.args ? options.args : "--max-time 10"
+    def args = options.args ? options.args : "-C - --max-time 600"
 
     if (meta.single_end) {
         """
-        curl $args -L ${fastq[0]} -o ${meta.id}.fastq.gz
+        timeout $options.args2 bash -c 'until curl $args -L ${fastq[0]} -o ${meta.id}.fastq.gz; do sleep 1; done'; echo -e \\\\a
         echo "${meta.md5_1} ${meta.id}.fastq.gz" > ${meta.id}.fastq.gz.md5
         md5sum -c ${meta.id}.fastq.gz.md5
         """
     } else {
         """
-        curl $args -L ${fastq[0]} -o ${meta.id}_1.fastq.gz
+        timeout $options.args2 bash -c 'until curl $args -L ${fastq[0]} -o ${meta.id}_1.fastq.gz; do sleep 1; done'; echo -e \\\\a
         echo "${meta.md5_1} ${meta.id}_1.fastq.gz" > ${meta.id}_1.fastq.gz.md5
         md5sum -c ${meta.id}_1.fastq.gz.md5
 
-        curl $args -L ${fastq[1]} -o ${meta.id}_2.fastq.gz
+        timeout $options.args2 bash -c 'until curl $args -L ${fastq[1]} -o ${meta.id}_2.fastq.gz; do sleep 1; done'; echo -e \\\\a
         echo "${meta.md5_2} ${meta.id}_2.fastq.gz" > ${meta.id}_2.fastq.gz.md5
         md5sum -c ${meta.id}_2.fastq.gz.md5
         """
