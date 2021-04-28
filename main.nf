@@ -33,9 +33,6 @@ sra_fastq_ftp_options.args2 = params.timeout_max_time
 /* --    IMPORT LOCAL MODULES/SUBWORKFLOWS     -- */
 ////////////////////////////////////////////////////
 
-// Don't overwrite global params.modules, create a copy instead and use that within the main script.
-def modules = params.modules.clone()
-
 include { SRA_IDS_TO_RUNINFO    } from './modules/sra_ids_to_runinfo'    addParams( options: modules['sra_ids_to_runinfo'] )
 include { SRA_RUNINFO_TO_FTP    } from './modules/sra_runinfo_to_ftp'    addParams( options: modules['sra_runinfo_to_ftp'] )
 include { SRA_FASTQ_FTP         } from './modules/sra_fastq_ftp'         addParams( options: sra_fastq_ftp_options         )
