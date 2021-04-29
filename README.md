@@ -16,3 +16,29 @@ SRA_IDS = ['PRJNA63463', 'SAMN00765663', 'SRA023522', 'SRP003255', 'SRR390278', 
 ENA_IDS = ['ERA2421642', 'ERP120836', 'ERR674736', 'ERS4399631', 'ERX629702', 'PRJEB7743', 'SAMEA3121481']
 GEO_IDS = ['GSE18729', 'GSM465244']
 ```
+## Running on CAMP
+
+Create a `run.sh` file with the code below in and change your parameters accordingly
+
+```#!/bin/sh
+
+export NXF_SINGULARITY_CACHEDIR=/camp/lab/luscomben/home/shared/singularity
+
+## LOAD REQUIRED MODULES
+ml purge
+ml Nextflow/20.12.0-edge
+ml Singularity/3.4.2
+ml Graphviz
+
+## UPDATE PIPLINE
+nextflow pull luslab/luslab-nf-sra-download
+
+## RUN PIPELINE
+nextflow run luslab/luslab-nf-sra-download \
+  -profile crick \
+  -r main \
+  --public_data_ids em-seq-200ng.txt \
+  --curl_max_time 1200 \
+  --timeout_max_time 2h \
+  -resume
+  ```
