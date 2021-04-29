@@ -53,6 +53,7 @@ def make_dir(path):
 
 def fetch_url(url,encoding='utf-8'):
     try:
+        print(url)
         r = requests.get(url)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
