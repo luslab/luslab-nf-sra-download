@@ -5,7 +5,7 @@ This pipeline extended the functionality of the nf-core DSL2 SRA downloader by p
 To run:
 
 ```
-nextflow run luslab/luslab-nf-sra-download -profile docker --public_data_ids {FILE WITH LIST OF IDS FOR DOWNLOAD} --curl_max_time 1200 --timeout_max_time 2h
+nextflow run luslab/luslab-nf-sra-download -profile docker --public_data_ids {FILE WITH LIST OF IDS FOR DOWNLOAD (ONE ID PER LINE)} --curl_max_time 1200 --timeout_max_time 2h
 ```
 
 Supported ids:
