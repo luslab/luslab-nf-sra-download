@@ -12,7 +12,7 @@ process SRA_FASTQ_FTP {
     label 'process_medium'
     label 'error_retry'
     publishDir "${params.outdir}",
-        mode: params.publish_dir_mode,
+        mode: 'move',
         saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:getSoftwareName(task.process), meta:meta, publish_by_meta:['id']) }
 
     container "biocontainers/biocontainers:v1.2.0_cv1"
@@ -21,7 +21,7 @@ process SRA_FASTQ_FTP {
     tuple val(meta), val(fastq)
 
     output:
-    tuple val(meta), path("*fastq.gz"), emit: fastq
+    //tuple val(meta), path("*fastq.gz"), emit: fastq
     tuple val(meta), path("*md5")     , emit: md5
 
     script:
