@@ -21,7 +21,7 @@ process SRA_FASTQ_FTP {
     tuple val(meta), val(fastq)
 
     output:
-    //tuple val(meta), path("*fastq.gz"), emit: fastq
+    tuple val(meta), path("*fastq.gz"), emit: fastq
     tuple val(meta), path("*md5")     , emit: md5
 
     script:
